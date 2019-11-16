@@ -1,8 +1,6 @@
 package pl.edu.agh.distributedsystems.employeeservice.employees;
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 

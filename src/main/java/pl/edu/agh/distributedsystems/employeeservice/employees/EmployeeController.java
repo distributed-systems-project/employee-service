@@ -1,11 +1,14 @@
 package pl.edu.agh.distributedsystems.employeeservice.employees;
 
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.distributedsystems.employeeservice.client.Building;
 import pl.edu.agh.distributedsystems.employeeservice.client.BuildingClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,7 +20,8 @@ public class EmployeeController {
     private BuildingClient buildingClient;
 
     @Autowired
-    public EmployeeController(EmployeeService service, BuildingClient buildingClient) {
+    public EmployeeController(EmployeeService service,
+                              BuildingClient buildingClient) {
         this.service = service;
         this.buildingClient = buildingClient;
     }
@@ -41,8 +45,26 @@ public class EmployeeController {
     }
 
     @GetMapping("/hotels/{hotelId}")
-    public List<Employee> findByHotel(@PathVariable("hotelId") Long hotelId) {
+    public List<EmployeeWithHotel> findByHotel(@PathVariable("hotelId") Long hotelId) {
         LOGGER.info("Employee find: hotelId={}", hotelId);
-        return service.findByHotelId(hotelId);
+        Building hotel = buildingClient.findByHotel(hotelId);
+        List<Employee> employees = service.findByHotelId(hotelId);
+
+        ArrayList<EmployeeWithHotel> employeesWithHotel = new ArrayList<>();
+        for (Employee e : employees) {
+            employeesWithHotel.add(new EmployeeWithHotel(hotel, e));
+        }
+        return employeesWithHotel;
+    }
+
+    @Data
+    public static class EmployeeWithHotel {
+        private Building hotel;
+        private Employee employee;
+
+        public EmployeeWithHotel(Building hotel, Employee employee) {
+            this.hotel = hotel;
+            this.employee = employee;
+        }
     }
 }

@@ -39,6 +39,6 @@ public class EmployeeService {
     }
 
     public List<Employee> findByHotelId(Long hotelId) {
-        return new ArrayList<>();
+        return employeeRepository.findAllByHotelId(hotelId);
     }
 }

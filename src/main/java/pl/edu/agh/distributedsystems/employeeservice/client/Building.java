@@ -15,7 +15,6 @@ public class Building {
     private int numOfFloors;
     private double floorArea;
     private String description;
-    private List<Room> rooms;
 
     protected Building() {
     }
