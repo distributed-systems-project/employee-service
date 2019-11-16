@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Employees")
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Employee {
 
     @Id
@@ -25,6 +24,9 @@ public class Employee {
     private int age;
     @Column(nullable = false)
     private String position;
+
+    protected Employee() {
+    }
 
     public Employee(Long hotelId, String name, int age, String position) {
         this.hotelId = hotelId;
