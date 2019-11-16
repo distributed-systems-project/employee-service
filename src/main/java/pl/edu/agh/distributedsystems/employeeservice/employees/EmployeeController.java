@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.distributedsystems.employeeservice.client.BuildingClient;
 
 import java.util.List;
 
@@ -13,10 +14,12 @@ public class EmployeeController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
     private EmployeeService service;
+    private BuildingClient buildingClient;
 
     @Autowired
-    public EmployeeController(EmployeeService service) {
+    public EmployeeController(EmployeeService service, BuildingClient buildingClient) {
         this.service = service;
+        this.buildingClient = buildingClient;
     }
 
     @GetMapping
@@ -37,7 +40,7 @@ public class EmployeeController {
         return service.findById(id);
     }
 
-    @GetMapping("/hotel/{hotelId}")
+    @GetMapping("/hotels/{hotelId}")
     public List<Employee> findByHotel(@PathVariable("hotelId") Long hotelId) {
         LOGGER.info("Employee find: hotelId={}", hotelId);
         return service.findByHotelId(hotelId);
