@@ -4,10 +4,13 @@ import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.distributedsystems.employeeservice.client.Building;
 import pl.edu.agh.distributedsystems.employeeservice.client.BuildingClient;
 
+import javax.xml.ws.Response;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +36,9 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public void add(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> add(@RequestBody Employee employee) {
         LOGGER.info("Employee add: {}", employee);
-        service.addEmployee(employee);
+        return new ResponseEntity<>(service.addEmployee(employee), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

@@ -24,9 +24,10 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    void addEmployee(Employee employee) {
+    Employee addEmployee(Employee employee) {
         System.out.println(employee);
         employeeRepository.save(employee);
+        return employee;
     }
 
     Employee findById(Long employeeId) {
