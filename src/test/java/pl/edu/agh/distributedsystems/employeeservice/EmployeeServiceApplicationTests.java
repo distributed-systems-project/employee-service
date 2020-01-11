@@ -54,7 +54,7 @@ public class EmployeeServiceApplicationTests {
 
     @Test
     public void testAddOne() {
-        HttpEntity<Employee> request = new HttpEntity<>(new Employee(1L, "John", 11, "Nobody"));
+        HttpEntity<Employee> request = new HttpEntity<>(new Employee(1L, "John Smith", 34, "EX1111", "1234", "Manager"));
         ResponseEntity<Employee> response = restTemplate
                 .exchange(getURL() + "/employees", HttpMethod.POST, request, Employee.class);
 
