@@ -4,13 +4,12 @@ import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.distributedsystems.employeeservice.client.Building;
 import pl.edu.agh.distributedsystems.employeeservice.client.BuildingClient;
 
-import javax.xml.ws.Response;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +37,8 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<Employee> add(@RequestBody Employee employee) {
         LOGGER.info("Employee add: {}", employee);
-        return new ResponseEntity<>(service.addEmployee(employee), HttpStatus.OK);
+        Employee addedEmployee = service.addEmployee(employee);
+        return ResponseEntity.created(URI.create("/employee/employees/" + addedEmployee.getId())).build();
     }
 
     @GetMapping("/{id}")

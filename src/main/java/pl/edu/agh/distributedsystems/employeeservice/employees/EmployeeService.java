@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -25,6 +25,10 @@ public class EmployeeService {
     }
 
     Employee addEmployee(Employee employee) {
+        System.out.println(employee);
+        UUID uuid = UUID.randomUUID();
+        employee.setEmployeeId(uuid.toString());
+        employee.setPassword("password");
         System.out.println(employee);
         employeeRepository.save(employee);
         return employee;
